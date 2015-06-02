@@ -1,0 +1,25 @@
+{
+	"database": {
+		"datasource": {
+			"driver": "mysql",
+			"environment": "development"
+		},
+		"environments": {
+			"test": {
+                "connection_string":"Server=localhost;Port=3306;Database=cms_dev;Uid=root;Pwd=;"
+			},
+			"development": {
+				"connection_string":"Server=localhost;Port=3306;Database=cms_dev;Uid=root;Pwd=;"
+				 },
+			"production": {
+				"connection_string":""
+			}
+		}
+	},
+
+
+	"logger": { 
+			"level":"DEBUG",
+			"backup_count":"4"
+		}
+}

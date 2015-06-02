@@ -1,0 +1,9 @@
+EIFGENs
+tests/temp/
+.svn/
+*.swp
+*~
+*.scm
+*#
+eiffel-org/data
+eiffel-org/documentation-tmp
