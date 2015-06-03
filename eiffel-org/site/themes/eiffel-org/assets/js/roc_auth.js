@@ -1,7 +1,7 @@
 var ROC_AUTH = ROC_AUTH || { };
 
-var loginURL = "/basic_auth_login?destination";
-var logoutURL = "/basic_auth_logoff?destination";
+var loginURL = "/basic_auth_login?destination=/";
+var logoutURL = "/basic_auth_logoff?destination=/";
 var userAgent = navigator.userAgent.toLowerCase();
 var firstLogIn = true;
  
@@ -24,7 +24,7 @@ ROC_AUTH.login = function() {
                     var newdiv = document.createElement('div');
 	                  newdiv.innerHTML = "<br>Invalid Credentials</br>";
                     newdiv.id = 'myModalFormId';
-                     $("body").append(newdiv);
+                    $('#content').append(newdiv);
                } 
 	}else{  
          
@@ -48,7 +48,7 @@ ROC_AUTH.login = function() {
                     var newdiv = document.createElement('div');
 	                   newdiv.innerHTML = "<br>Invalid Credentials</br>";
                     newdiv.id = 'myModalFormId';
-                    $("body").append(newdiv);
+                    $('#content').append(newdiv);
                    } 
 
                   }
