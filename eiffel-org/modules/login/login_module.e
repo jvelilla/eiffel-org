@@ -249,6 +249,7 @@ feature -- Hooks
 			then
 				if a_response.request.is_get_request_method then
 					if attached template_block (a_block_id, a_response) as l_tpl_block then
+						l_tpl_block.set_value (a_response.values.item ("token"), "token")
 						a_response.add_block (l_tpl_block, "content")
 					else
 						debug ("cms")
@@ -488,16 +489,36 @@ feature -- Hooks
 			br: BAD_REQUEST_ERROR_CMS_RESPONSE
 			es: LOGIN_EMAIL_SERVICE
 			l_user_api: CMS_USER_API
-			l_token: STRING
 			l_link: STRING
 			l_message: STRING
 		do
 			create {GENERIC_VIEW_CMS_RESPONSE} r.make (req, res, api)
+			if	attached {WSF_STRING} req.query_parameter ("token") as l_token then
+				r.values.force (l_token.value, "token")
+			end
+
 			if req.is_post_request_method then
+				l_user_api := api.user_api
 				if
-					attached {WSF_STRING} req.query_parameter ("token") as q_token
+					attached {WSF_STRING} req.form_parameter ("token") as l_token and then
+					attached {WSF_STRING} req.form_parameter ("password") as l_password and then
+					attached {WSF_STRING} req.form_parameter ("confirm_password") as l_confirm_password
 				then
-					r.values.force (q_token.value, "token")
+						-- Does the passwords match?	
+					if l_password.value.same_string (l_confirm_password.value) then
+							-- is the token valid?	
+						if attached {CMS_USER} l_user_api.user_by_activation_token (l_token.value) as l_user then
+							l_user.set_password (l_password.value)
+							l_user_api.update_user (l_user)
+							l_user_api.remove_activation (l_token.value)
+						else
+							r.values.force ("The token " + l_token.value + "is not valid, click <a href=%"/new-password%">here</a> to generate a new token.", "error_token")
+							r.set_status_code ({HTTP_CONSTANTS}.bad_request)
+						end
+					else
+						r.values.force ("Passwords Don't Match", "error_password")
+						r.set_status_code ({HTTP_CONSTANTS}.bad_request)
+					end
 				end
 			end
 			r.execute
