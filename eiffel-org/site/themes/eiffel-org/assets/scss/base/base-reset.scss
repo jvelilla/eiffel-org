@@ -82,7 +82,7 @@ textarea {
 	border: 1px solid $base-input-border-color;
 	&:focus {
 		border-color: darken($base-input-border-color, 30%); 
-		//outline: none;
+		outline: none;
 	}
 }
 

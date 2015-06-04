@@ -1,6 +1,6 @@
 /*
 Error: Undefined variable: "$base-link-color".
-        on line 4 of C:\home\dev\eiffel_dev\trunk\Src\web\eiffel-org\site\themes\eiffel-org\assets\scss\site\variables.scss
+        on line 4 of C:\home\projects\eiffel_org_dev\eiffel-org\site\themes\eiffel-org\assets\scss\site\variables.scss
 
 1: $wdocs-color: #112935;
 2: $wdocs-border-color: #ccc;
@@ -13,7 +13,7 @@ Error: Undefined variable: "$base-link-color".
 9: $wdocs-tree-arrow: #777;
 
 Backtrace:
-C:\home\dev\eiffel_dev\trunk\Src\web\eiffel-org\site\themes\eiffel-org\assets\scss\site\variables.scss:4
+C:\home\projects\eiffel_org_dev\eiffel-org\site\themes\eiffel-org\assets\scss\site\variables.scss:4
 C:/Program Files (x86)/Koala/rubygems/gems/sass-3.4.9/lib/sass/script/tree/variable.rb:49:in `_perform'
 C:/Program Files (x86)/Koala/rubygems/gems/sass-3.4.9/lib/sass/script/tree/node.rb:50:in `perform'
 C:/Program Files (x86)/Koala/rubygems/gems/sass-3.4.9/lib/sass/tree/visitors/perform.rb:458:in `visit_variable'
@@ -49,4 +49,4 @@ C:/Program Files (x86)/Koala/bin/sass:18:in `<main>'
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Error: Undefined variable: \"$base-link-color\".\A         on line 4 of C:\home\dev\eiffel_dev\trunk\Src\web\eiffel-org\site\themes\eiffel-org\assets\scss\site\variables.scss\A \A 1: $wdocs-color: #112935;\A 2: $wdocs-border-color: #ccc;\A 3: $wdocs-bg-color: #fff;\A 4: $wdocs-link-color: $base-link-color;\A 5: $wdocs-link-h-color: $base-link-h-color;\A 6: $wdocs-link-active-bg-color:rgba(240,240,255,0.6);\A 7: $wdocs-nav-color: $base-link-color;\A 8: $wdocs-nav-bg-color:rgba(220,220,220,0.7);\A 9: $wdocs-tree-arrow: #777;"; }
+  content: "Error: Undefined variable: \"$base-link-color\".\A         on line 4 of C:\home\projects\eiffel_org_dev\eiffel-org\site\themes\eiffel-org\assets\scss\site\variables.scss\A \A 1: $wdocs-color: #112935;\A 2: $wdocs-border-color: #ccc;\A 3: $wdocs-bg-color: #fff;\A 4: $wdocs-link-color: $base-link-color;\A 5: $wdocs-link-h-color: $base-link-h-color;\A 6: $wdocs-link-active-bg-color:rgba(240,240,255,0.6);\A 7: $wdocs-nav-color: $base-link-color;\A 8: $wdocs-nav-bg-color:rgba(220,220,220,0.7);\A 9: $wdocs-tree-arrow: #777;"; }

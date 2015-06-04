@@ -1,6 +1,6 @@
 /*
 Error: Undefined variable: "$base-text-color".
-        on line 3 of C:\home\dev\eiffel_dev\trunk\Src\web\eiffel-org\site\themes\eiffel-org\assets\scss\base\base-reset.scss
+        on line 3 of C:\home\projects\eiffel_org_dev\eiffel-org\site\themes\eiffel-org\assets\scss\base\base-reset.scss
 
 1: body { 
 2: 	margin: 0;
@@ -12,7 +12,7 @@ Error: Undefined variable: "$base-text-color".
 8: 	-webkit-text-size-adjust:100%;
 
 Backtrace:
-C:\home\dev\eiffel_dev\trunk\Src\web\eiffel-org\site\themes\eiffel-org\assets\scss\base\base-reset.scss:3
+C:\home\projects\eiffel_org_dev\eiffel-org\site\themes\eiffel-org\assets\scss\base\base-reset.scss:3
 C:/Program Files (x86)/Koala/rubygems/gems/sass-3.4.9/lib/sass/script/tree/variable.rb:49:in `_perform'
 C:/Program Files (x86)/Koala/rubygems/gems/sass-3.4.9/lib/sass/script/tree/node.rb:50:in `perform'
 C:/Program Files (x86)/Koala/rubygems/gems/sass-3.4.9/lib/sass/tree/visitors/perform.rb:384:in `visit_prop'
@@ -59,4 +59,4 @@ C:/Program Files (x86)/Koala/bin/sass:18:in `<main>'
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Error: Undefined variable: \"$base-text-color\".\A         on line 3 of C:\home\dev\eiffel_dev\trunk\Src\web\eiffel-org\site\themes\eiffel-org\assets\scss\base\base-reset.scss\A \A 1: body { \A 2: 	margin: 0;\A 3: 	color: $base-text-color;\A 4: 	background: $base-background-color;\A 5: 	font: #{$base-font-size}/#{$base-line-height} $base-font-family;\A 6: 	min-width: $base-min-width;\A 7: 	overflow-y: scroll;\A 8: 	-webkit-text-size-adjust:100%;"; }
+  content: "Error: Undefined variable: \"$base-text-color\".\A         on line 3 of C:\home\projects\eiffel_org_dev\eiffel-org\site\themes\eiffel-org\assets\scss\base\base-reset.scss\A \A 1: body { \A 2: 	margin: 0;\A 3: 	color: $base-text-color;\A 4: 	background: $base-background-color;\A 5: 	font: #{$base-font-size}/#{$base-line-height} $base-font-family;\A 6: 	min-width: $base-min-width;\A 7: 	overflow-y: scroll;\A 8: 	-webkit-text-size-adjust:100%;"; }

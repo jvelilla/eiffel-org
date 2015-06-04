@@ -1,7 +1,7 @@
 /*
 Error: Undefined mixin 'border-radius'.
-        on line 53 of C:\home\dev\eiffel_dev\trunk\Src\web\eiffel-org\site\themes\eiffel-org\assets\scss\site\download_product.scss, in `border-radius'
-        from line 53 of C:\home\dev\eiffel_dev\trunk\Src\web\eiffel-org\site\themes\eiffel-org\assets\scss\site\download_product.scss
+        on line 53 of C:\home\projects\eiffel_org_dev\eiffel-org\site\themes\eiffel-org\assets\scss\site\download_product.scss, in `border-radius'
+        from line 53 of C:\home\projects\eiffel_org_dev\eiffel-org\site\themes\eiffel-org\assets\scss\site\download_product.scss
 
 48: 
 49: #block-download_area {
@@ -16,8 +16,8 @@ Error: Undefined mixin 'border-radius'.
 58: 		}
 
 Backtrace:
-C:\home\dev\eiffel_dev\trunk\Src\web\eiffel-org\site\themes\eiffel-org\assets\scss\site\download_product.scss:53:in `border-radius'
-C:\home\dev\eiffel_dev\trunk\Src\web\eiffel-org\site\themes\eiffel-org\assets\scss\site\download_product.scss:53
+C:\home\projects\eiffel_org_dev\eiffel-org\site\themes\eiffel-org\assets\scss\site\download_product.scss:53:in `border-radius'
+C:\home\projects\eiffel_org_dev\eiffel-org\site\themes\eiffel-org\assets\scss\site\download_product.scss:53
 C:/Program Files (x86)/Koala/rubygems/gems/sass-3.4.9/lib/sass/tree/visitors/perform.rb:338:in `block in visit_mixin'
 C:/Program Files (x86)/Koala/rubygems/gems/sass-3.4.9/lib/sass/stack.rb:98:in `block in with_mixin'
 C:/Program Files (x86)/Koala/rubygems/gems/sass-3.4.9/lib/sass/stack.rb:115:in `with_frame'
@@ -77,4 +77,4 @@ C:/Program Files (x86)/Koala/bin/sass:18:in `<main>'
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Error: Undefined mixin 'border-radius'.\A         on line 53 of C:\home\dev\eiffel_dev\trunk\Src\web\eiffel-org\site\themes\eiffel-org\assets\scss\site\download_product.scss, in `border-radius'\A         from line 53 of C:\home\dev\eiffel_dev\trunk\Src\web\eiffel-org\site\themes\eiffel-org\assets\scss\site\download_product.scss\A \A 48: \A 49: #block-download_area {\A 50: 	.holder {\A 51: 		border: none;\A 52: 		height: 150px;\A 53: 		@include border-radius($front-box-radius);\A 54: 		@include grid-width(6);\A 55: 		padding: 0;\A 56: 		.row {\A 57: 			border-bottom: 1px solid #fff;\A 58: 		}"; }
+  content: "Error: Undefined mixin 'border-radius'.\A         on line 53 of C:\home\projects\eiffel_org_dev\eiffel-org\site\themes\eiffel-org\assets\scss\site\download_product.scss, in `border-radius'\A         from line 53 of C:\home\projects\eiffel_org_dev\eiffel-org\site\themes\eiffel-org\assets\scss\site\download_product.scss\A \A 48: \A 49: #block-download_area {\A 50: 	.holder {\A 51: 		border: none;\A 52: 		height: 150px;\A 53: 		@include border-radius($front-box-radius);\A 54: 		@include grid-width(6);\A 55: 		padding: 0;\A 56: 		.row {\A 57: 			border-bottom: 1px solid #fff;\A 58: 		}"; }

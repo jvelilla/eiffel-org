@@ -1,5 +1,5 @@
 ﻿note
-	description: "Module Logging supporting differnt authentication strategies"
+	description: "Module Logging supporting different authentication strategies"
 	date: "$Date: 2015-05-20 06:50:50 -0300 (mi. 20 de may. de 2015) $"
 	revision: "$Revision: 97328 $"
 
@@ -70,6 +70,10 @@ feature -- Router
 		do
 			a_router.handle_with_request_methods ("/roc-login", create {WSF_URI_AGENT_HANDLER}.make (agent handle_login (a_api, ?, ?)), a_router.methods_head_get)
 			a_router.handle_with_request_methods ("/roc-register", create {WSF_URI_AGENT_HANDLER}.make (agent handle_register (a_api, ?, ?)), a_router.methods_get_post)
+			a_router.handle_with_request_methods ("/activate/{token}", create {WSF_URI_TEMPLATE_AGENT_HANDLER}.make (agent handle_activation (a_api, ?, ?)), a_router.methods_head_get)
+			a_router.handle_with_request_methods ("/reactivate", create {WSF_URI_AGENT_HANDLER}.make (agent handle_reactivation (a_api, ?, ?)), a_router.methods_get_post)
+			a_router.handle_with_request_methods ("/new-password", create {WSF_URI_AGENT_HANDLER}.make (agent handle_new_password (a_api, ?, ?)), a_router.methods_get_post)
+			a_router.handle_with_request_methods ("/reset-password", create {WSF_URI_AGENT_HANDLER}.make (agent handle_reset_password (a_api, ?, ?)), a_router.methods_get_post)
 		end
 
 feature -- Hooks configuration
@@ -105,7 +109,7 @@ feature -- Hooks
 		local
 			l_string: STRING
 		do
-			Result := <<"login","register">>
+			Result := <<"login","register","reactivate","new_password", "reset_password">>
 			create l_string.make_empty
 			across Result as ic loop
 					l_string.append (ic.item)
@@ -150,10 +154,12 @@ feature -- Hooks
 						end
 					end
 				elseif a_response.request.is_post_request_method then
-					if a_response.values.has ("error_name") or else a_response.values.has ("error_mail") then
+					if a_response.values.has ("error_name") or else a_response.values.has ("error_email") then
 						if attached template_block (a_block_id, a_response) as l_tpl_block then
 							l_tpl_block.set_value (a_response.values.item ("error_name"), "error_name")
 							l_tpl_block.set_value (a_response.values.item ("error_email"), "error_email")
+							l_tpl_block.set_value (a_response.values.item ("email"), "email")
+							l_tpl_block.set_value (a_response.values.item ("name"), "name")
 							a_response.add_block (l_tpl_block, "content")
 						else
 							debug ("cms")
@@ -170,13 +176,114 @@ feature -- Hooks
 						end
 					end
 				end
+			elseif
+				a_block_id.is_case_insensitive_equal_general ("reactivate") and then
+				a_response.request.path_info.starts_with ("/reactivate")
+			then
+				if a_response.request.is_get_request_method then
+					if attached template_block (a_block_id, a_response) as l_tpl_block then
+						a_response.add_block (l_tpl_block, "content")
+					else
+						debug ("cms")
+							a_response.add_warning_message ("Error with block [" + a_block_id + "]")
+						end
+					end
+				elseif a_response.request.is_post_request_method then
+					if a_response.values.has ("error_email") or else a_response.values.has ("is_active") then
+						if attached template_block (a_block_id, a_response) as l_tpl_block then
+							l_tpl_block.set_value (a_response.values.item ("error_email"), "error_email")
+							l_tpl_block.set_value (a_response.values.item ("email"), "email")
+							l_tpl_block.set_value (a_response.values.item ("is_active"), "is_active")
+							a_response.add_block (l_tpl_block, "content")
+						else
+							debug ("cms")
+								a_response.add_warning_message ("Error with block [" + a_block_id + "]")
+							end
+						end
+					else
+						if attached template_block ("post_reactivate", a_response) as l_tpl_block then
+							a_response.add_block (l_tpl_block, "content")
+						else
+							debug ("cms")
+								a_response.add_warning_message ("Error with block [" + a_block_id + "]")
+							end
+						end
+					end
+				end
+			elseif
+				a_block_id.is_case_insensitive_equal_general ("new_password") and then
+				a_response.request.path_info.starts_with ("/new-password")
+			then
+				if a_response.request.is_get_request_method then
+					if attached template_block (a_block_id, a_response) as l_tpl_block then
+						a_response.add_block (l_tpl_block, "content")
+					else
+						debug ("cms")
+							a_response.add_warning_message ("Error with block [" + a_block_id + "]")
+						end
+					end
+				elseif a_response.request.is_post_request_method then
+					if a_response.values.has ("error_email")  then
+						if attached template_block (a_block_id, a_response) as l_tpl_block then
+							l_tpl_block.set_value (a_response.values.item ("error_email"), "error_email")
+							l_tpl_block.set_value (a_response.values.item ("email"), "email")
+							a_response.add_block (l_tpl_block, "content")
+						else
+							debug ("cms")
+								a_response.add_warning_message ("Error with block [" + a_block_id + "]")
+							end
+						end
+					else
+						if attached template_block ("post_password", a_response) as l_tpl_block then
+							a_response.add_block (l_tpl_block, "content")
+						else
+							debug ("cms")
+								a_response.add_warning_message ("Error with block [" + a_block_id + "]")
+							end
+						end
+					end
+				end
+			elseif
+				a_block_id.is_case_insensitive_equal_general ("reset_password") and then
+				a_response.request.path_info.starts_with ("/reset-password")
+			then
+				if a_response.request.is_get_request_method then
+					if attached template_block (a_block_id, a_response) as l_tpl_block then
+						a_response.add_block (l_tpl_block, "content")
+					else
+						debug ("cms")
+							a_response.add_warning_message ("Error with block [" + a_block_id + "]")
+						end
+					end
+				elseif a_response.request.is_post_request_method then
+					if a_response.values.has ("error_token") or else a_response.values.has ("error_password")   then
+						if attached template_block (a_block_id, a_response) as l_tpl_block then
+							l_tpl_block.set_value (a_response.values.item ("error_token"), "error_token")
+							l_tpl_block.set_value (a_response.values.item ("error_password"), "error_password")
+							l_tpl_block.set_value (a_response.values.item ("token"), "token")
+							a_response.add_block (l_tpl_block, "content")
+						else
+							debug ("cms")
+								a_response.add_warning_message ("Error with block [" + a_block_id + "]")
+							end
+						end
+					else
+						if attached template_block ("post_reset", a_response) as l_tpl_block then
+							a_response.add_block (l_tpl_block, "content")
+						else
+							debug ("cms")
+								a_response.add_warning_message ("Error with block [" + a_block_id + "]")
+							end
+						end
+					end
+				end
 			end
-
 		end
 
 	handle_login (api: CMS_API; req: WSF_REQUEST; res: WSF_RESPONSE)
 		local
 			r: CMS_RESPONSE
+			br: BAD_REQUEST_ERROR_CMS_RESPONSE
 		do
 			create {GENERIC_VIEW_CMS_RESPONSE} r.make (req, res, api)
 			r.set_value ("Login", "optional_content_type")
@@ -191,6 +298,10 @@ feature -- Hooks
 			u: CMS_USER
 			l_roles: LIST [CMS_USER_ROLE]
 			l_exist: BOOLEAN
+			es: LOGIN_EMAIL_SERVICE
+			l_link: STRING
+			l_token: STRING
+			l_message: STRING
 		do
 			create {GENERIC_VIEW_CMS_RESPONSE} r.make (req, res, api)
 			r.set_value ("Register", "optional_content_type")
@@ -222,9 +333,26 @@ feature -- Hooks
 						u.set_email (l_email.value)
 						u.set_password (l_password.value)
 						u.set_roles (l_roles)
-
 						l_user_api.new_user (u)
+
+							-- Create activation token
+						l_token := new_token
+						l_user_api.new_activation (l_token, u.id)
+						create l_link.make_from_string (req.server_url)
+						l_link.append ("/activate/")
+						l_link.append (l_token)
+
+						create l_message.make_from_string (account_activation)
+						l_message.replace_substring_all ("$link", l_link)
+
+							-- Send Email
+						create es.make (create {LOGIN_EMAIL_SERVICE_PARAMETERS}.make (api))
+						write_debug_log (generator + ".handle register: send_contact_email")
+						es.send_contact_email (l_email.value, l_message)
+
 					else
+						r.values.force (l_name.value, "name")
+						r.values.force (l_email.value, "email")
 						r.set_status_code ({HTTP_CONSTANTS}.bad_request)
 					end
 				end
@@ -233,6 +361,147 @@ feature -- Hooks
 			r.execute
 		end
 
+	handle_activation (api: CMS_API; req: WSF_REQUEST; res: WSF_RESPONSE)
+		local
+			r: CMS_RESPONSE
+			l_user_api: CMS_USER_API
+			l_id: INTEGER_64
+			l_ir: INTERNAL_SERVER_ERROR_CMS_RESPONSE
+			l_link: CMS_LOCAL_LINK
+		do
+			l_user_api := api.user_api
+			create {GENERIC_VIEW_CMS_RESPONSE} r.make (req, res, api)
+			if attached {WSF_STRING} req.path_parameter ("token") as l_token then
+
+				if attached {CMS_USER} l_user_api.user_by_activation_token (l_token.value) as l_user then
+					-- Valid user_id
+					l_user.mark_active
+					l_user_api.update_user (l_user)
+					l_user_api.remove_activation (l_token.value)
+					r.set_value ("Account activated", "optional_content_type")
+					r.set_main_content ("<p> Your account <i>"+ l_user.name +"</i> has been activated</p>")
+				else
+					-- the token does not exist, or it was already used.
+					r.set_status_code ({HTTP_CONSTANTS}.bad_request)
+					r.set_value ("Account not activated", "optional_content_type")
+					r.set_main_content ("<p>The token <i>"+ l_token.value +"</i> is not valid <a href=%"/reactivate%">Reactivate Account</a></p>"  )
+
+				end
+				r.execute
+			else
+				create l_ir.make (req, res, api)
+				l_ir.execute
+			end
+		end
+
+
+	handle_reactivation (api: CMS_API; req: WSF_REQUEST; res: WSF_RESPONSE)
+		local
+			r: CMS_RESPONSE
+			br: BAD_REQUEST_ERROR_CMS_RESPONSE
+			es: LOGIN_EMAIL_SERVICE
+			l_user_api: CMS_USER_API
+			l_token: STRING
+			l_link: STRING
+			l_message: STRING
+		do
+			create {GENERIC_VIEW_CMS_RESPONSE} r.make (req, res, api)
+			if req.is_post_request_method then
+				if
+					attached {WSF_STRING} req.form_parameter ("email") as l_email
+				then
+					l_user_api := api.user_api
+					if 	attached {CMS_USER} l_user_api.user_by_email (l_email.value) as l_user then
+							-- User exist create a new token and send a new email.
+						if l_user.is_active then
+							r.values.force ("The asociated user to the given email " + l_email.value + " , is already active", "is_active")
+							r.set_status_code ({HTTP_CONSTANTS}.bad_request)
+						else
+							l_token := new_token
+							l_user_api.new_activation (l_token, l_user.id)
+							create l_link.make_from_string (req.server_url)
+							l_link.append ("/activate/")
+							l_link.append (l_token)
+
+							create l_message.make_from_string (account_activation)
+							l_message.replace_substring_all ("$link", l_link)
+
+								-- Send Email
+							create es.make (create {LOGIN_EMAIL_SERVICE_PARAMETERS}.make (api))
+							write_debug_log (generator + ".handle register: send_contact_email")
+							es.send_contact_email (l_email.value, l_message)
+						end
+					else
+						r.values.force ("The email does not exist or !", "error_email")
+						r.values.force (l_email.value, "email")
+						r.set_status_code ({HTTP_CONSTANTS}.bad_request)
+					end
+				end
+			end
+
+			r.execute
+		end
+
+	handle_new_password (api: CMS_API; req: WSF_REQUEST; res: WSF_RESPONSE)
+		local
+			r: CMS_RESPONSE
+			br: BAD_REQUEST_ERROR_CMS_RESPONSE
+			es: LOGIN_EMAIL_SERVICE
+			l_user_api: CMS_USER_API
+			l_token: STRING
+			l_link: STRING
+			l_message: STRING
+		do
+			create {GENERIC_VIEW_CMS_RESPONSE} r.make (req, res, api)
+			if req.is_post_request_method then
+				l_user_api := api.user_api
+				if attached {WSF_STRING} req.form_parameter ("email") as l_email then
+					if 	attached {CMS_USER} l_user_api.user_by_email (l_email.value) as l_user then
+								-- User exist create a new token and send a new email.
+						l_token := new_token
+						l_user_api.new_activation (l_token, l_user.id)
+						create l_link.make_from_string (req.server_url)
+						l_link.append ("/reset-password?token=")
+						l_link.append (l_token)
+
+						create l_message.make_from_string (account_new_password)
+						l_message.replace_substring_all ("$link", l_link)
+
+								-- Send Email
+						create es.make (create {LOGIN_EMAIL_SERVICE_PARAMETERS}.make (api))
+						write_debug_log (generator + ".handle register: send_contact_email")
+						es.send_contact_email (l_email.value, l_message)
+					else
+						r.values.force ("The email does not exist !", "error_email")
+						r.values.force (l_email.value, "email")
+						r.set_status_code ({HTTP_CONSTANTS}.bad_request)
+					end
+				end
+			end
+			r.execute
+		end
+
+
+	handle_reset_password (api: CMS_API; req: WSF_REQUEST; res: WSF_RESPONSE)
+		local
+			r: CMS_RESPONSE
+			br: BAD_REQUEST_ERROR_CMS_RESPONSE
+			es: LOGIN_EMAIL_SERVICE
+			l_user_api: CMS_USER_API
+			l_token: STRING
+			l_link: STRING
+			l_message: STRING
+		do
+			create {GENERIC_VIEW_CMS_RESPONSE} r.make (req, res, api)
+			if req.is_post_request_method then
+				if
+					attached {WSF_STRING} req.query_parameter ("token") as q_token
+				then
+					r.values.force (q_token.value, "token")
+				end
+			end
+			r.execute
+		end
 
 feature {NONE} -- Helpers
 
@@ -252,6 +521,70 @@ feature {NONE} -- Helpers
 				end
 			end
 		end
+
+feature {NONE} -- Token Generation
+
+	new_token: STRING
+			-- Generate a new token activation token
+		local
+			l_token: STRING
+			l_security: SECURITY_PROVIDER
+			l_encode: URL_ENCODER
+		do
+			create l_security
+			l_token := l_security.token
+			create l_encode
+			from until l_token.same_string (l_encode.encoded_string (l_token)) loop
+				-- Loop ensure that we have a security token that does not contain characters that need encoding.
+			    -- We cannot simply to an encode-decode because the email sent to the user will contain an encoded token
+				-- but the user will need to use an unencoded token if activation has to be done manually.
+				l_token := l_security.token
+			end
+			Result := l_token
+		end
+
+feature --{NONE} -- Message email
+
+	account_activation: STRING= "[
+		<!doctype html>
+		<html lang="en">
+		<head>
+		  <meta charset="utf-8">
+		  <title>Eiffel.org Activation</title>
+		  <meta name="description" content="Eiffel.org Activation">
+		  <meta name="author" content="Eiffel.org">
+		</head>
+
+		<body>
+			<p>Thank you for registering at <a href="eiffel.org">Eiffel.org</a></p>
+
+			<p>To complete your registration, please click on this link to activate your account:<p>
+
+			<p><a href="$link">$link</a></p>
+			<p>Thank you for joining us.</p>
+		</body>
+		</html>
+	]"
+
+	account_new_password: STRING= "[
+		<!doctype html>
+		<html lang="en">
+		<head>
+		  <meta charset="utf-8">
+		  <title>Eiffel.org New Password</title>
+		  <meta name="description" content="Eiffel.org New Password">
+		  <meta name="author" content="Eiffel.org">
+		</head>
+
+		<body>
+			<p>You have required a new password at <a href="eiffel.org">Eiffel.org</a></p>
+
+			<p>To complete your request, please click on this link to genereate a new password:<p>
+
+			<p><a href="$link">$link</a></p>
+		</body>
+		</html>
+	]"
 
 feature {NONE} -- Implementation: date and time
 
@@ -282,6 +615,9 @@ feature {NONE} -- Implementation: date and time
 			create d.make_from_timestamp (n)
 			Result := d.date_time
 		end
+
+
+
 
 note
 	copyright: "Copyright (c) 1984-2013, Eiffel Software and others"

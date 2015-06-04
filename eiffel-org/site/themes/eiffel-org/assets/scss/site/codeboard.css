@@ -1,7 +1,7 @@
 /*
 Error: Undefined variable: "$front-box-radius".
-        on line 16 of C:\home\dev\eiffel_dev\trunk\Src\web\eiffel-org\site\themes\eiffel-org\assets\scss\site\codeboard.scss, in `border-radius'
-        from line 16 of C:\home\dev\eiffel_dev\trunk\Src\web\eiffel-org\site\themes\eiffel-org\assets\scss\site\codeboard.scss
+        on line 16 of C:\home\projects\eiffel_org_dev\eiffel-org\site\themes\eiffel-org\assets\scss\site\codeboard.scss, in `border-radius'
+        from line 16 of C:\home\projects\eiffel_org_dev\eiffel-org\site\themes\eiffel-org\assets\scss\site\codeboard.scss
 
 11: 
 12: 	pre.prettyprint {
@@ -16,8 +16,8 @@ Error: Undefined variable: "$front-box-radius".
 21: 		width: 100%;
 
 Backtrace:
-C:\home\dev\eiffel_dev\trunk\Src\web\eiffel-org\site\themes\eiffel-org\assets\scss\site\codeboard.scss:16:in `border-radius'
-C:\home\dev\eiffel_dev\trunk\Src\web\eiffel-org\site\themes\eiffel-org\assets\scss\site\codeboard.scss:16
+C:\home\projects\eiffel_org_dev\eiffel-org\site\themes\eiffel-org\assets\scss\site\codeboard.scss:16:in `border-radius'
+C:\home\projects\eiffel_org_dev\eiffel-org\site\themes\eiffel-org\assets\scss\site\codeboard.scss:16
 C:/Program Files (x86)/Koala/rubygems/gems/sass-3.4.9/lib/sass/script/tree/variable.rb:49:in `_perform'
 C:/Program Files (x86)/Koala/rubygems/gems/sass-3.4.9/lib/sass/script/tree/node.rb:50:in `perform'
 C:/Program Files (x86)/Koala/rubygems/gems/sass-3.4.9/lib/sass/tree/visitors/perform.rb:344:in `block (2 levels) in visit_mixin'
@@ -81,4 +81,4 @@ C:/Program Files (x86)/Koala/bin/sass:18:in `<main>'
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Error: Undefined variable: \"$front-box-radius\".\A         on line 16 of C:\home\dev\eiffel_dev\trunk\Src\web\eiffel-org\site\themes\eiffel-org\assets\scss\site\codeboard.scss, in `border-radius'\A         from line 16 of C:\home\dev\eiffel_dev\trunk\Src\web\eiffel-org\site\themes\eiffel-org\assets\scss\site\codeboard.scss\A \A 11: \A 12: 	pre.prettyprint {\A 13: 		@include grid-width(6);\A 14: 		padding-left:18px;\A 15: 		border: solid 1px #fff;\A 16: 		@include border-radius($front-box-radius);\A 17: 		background-color: $front-box-bg-color;\A 18: 		height: 266px;\A 19: 	}\A 20: 	.holder-play{\A 21: 		width: 100%;"; }
+  content: "Error: Undefined variable: \"$front-box-radius\".\A         on line 16 of C:\home\projects\eiffel_org_dev\eiffel-org\site\themes\eiffel-org\assets\scss\site\codeboard.scss, in `border-radius'\A         from line 16 of C:\home\projects\eiffel_org_dev\eiffel-org\site\themes\eiffel-org\assets\scss\site\codeboard.scss\A \A 11: \A 12: 	pre.prettyprint {\A 13: 		@include grid-width(6);\A 14: 		padding-left:18px;\A 15: 		border: solid 1px #fff;\A 16: 		@include border-radius($front-box-radius);\A 17: 		background-color: $front-box-bg-color;\A 18: 		height: 266px;\A 19: 	}\A 20: 	.holder-play{\A 21: 		width: 100%;"; }

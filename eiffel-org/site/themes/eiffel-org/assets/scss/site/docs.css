@@ -82,7 +82,8 @@ textarea {
   input[type="password"]:focus,
   input[type="search"]:focus,
   textarea:focus {
-    border-color: #4d4d4d; }
+    border-color: #4d4d4d;
+    outline: none; }
 
 textarea {
   overflow: auto;

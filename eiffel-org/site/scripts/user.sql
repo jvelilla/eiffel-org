@@ -1,4 +1,4 @@
-BEGIN
+BEGIN;
 
 CREATE TABLE `users` (
   `uid` int(11) NOT NULL AUTO_INCREMENT,
@@ -9,7 +9,7 @@ CREATE TABLE `users` (
   `status` int(11) DEFAULT NULL,
   `created` datetime NOT NULL,
   `signed` datetime DEFAULT NULL,
-  CHECK (`uid` >= 0);
+  CHECK (`uid` >= 0),
   PRIMARY KEY (`uid`),
   UNIQUE KEY `name` (`name`)
 );
@@ -34,7 +34,21 @@ CREATE TABLE `role_permissions` (
   `rid` int(11) NOT NULL,
   `permission` varchar(255) NOT NULL,
   `module` varchar(255) DEFAULT NULL,
-   CHECK (`rid` >= 0),
-)
+   CHECK (`rid` >= 0)
+);
+
+
+CREATE TABLE `users_activations` (
+  `aid` int(11) NOT NULL AUTO_INCREMENT,
+  `token` varchar(255) NOT NULL,
+  `uid` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+   CHECK (`aid` >= 0),
+   CHECK (`uid` >= 0),
+   PRIMARY KEY (`aid`),
+   UNIQUE KEY `token` (`token`)
+);
+
+
 
 COMMIT;

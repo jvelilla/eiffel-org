@@ -24,7 +24,7 @@
 		<div>
 			<div>
 				<p>
-					<a href="/reset-password">Forgot password?</a>
+					<a href="/new-password">Forgot password?</a>
 				</p>
 			</div>
 		</div>	
